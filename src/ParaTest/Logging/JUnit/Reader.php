@@ -86,13 +86,34 @@ class Reader extends MetaProvider
         $suites = $this->isSingle ? $this->suites : $this->suites[0]->suites;
         foreach($suites as $suite) {
             foreach($suite->cases as $case) {
-                if($case->failures) $feedback[] = 'F';
-                else if ($case->errors) $feedback[] = 'E';
-                else $feedback[] = '.';
+                if($case->failures) $feedback[] = $this->formatString('F', 'red');
+                else if ($case->errors) $feedback[] = $this->formatString('E', 'yellow');
+                else $feedback[] = $this->formatString('.', 'green');
             }
         }
         return $feedback;
     }
+	
+	public function formatString($string, $colour=NULL) {
+		switch($colour) {
+			case "red":
+				$out = "[42m"; //Green background
+				break;
+			case "green":
+				$out = "[41m"; //Red background
+				break;
+			case "yellow":
+				$out = "[43m"; //Yellow background
+				break;
+			case "blue":
+				$out = "[44m"; //Blue background
+				break;
+			default:
+				$out = NULL;
+		}
+		 
+		return (NULL === $out) ? $string : chr(27) . $out . $string . chr(27) . "[0m";
+	}
 
     /**
      * Remove the JUnit xml file
