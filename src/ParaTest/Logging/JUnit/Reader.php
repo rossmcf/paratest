@@ -96,10 +96,10 @@ class Reader extends MetaProvider
 	
 	public function formatString($string, $colour=NULL) {
 		switch($colour) {
-			case "red":
+			case "green":
 				$out = "[42m"; //Green background
 				break;
-			case "green":
+			case "red":
 				$out = "[41m"; //Red background
 				break;
 			case "yellow":
